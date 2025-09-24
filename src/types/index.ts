@@ -3,12 +3,15 @@ export interface User {
   name: string;
   age: number;
   gender: string;
-  photos: string[];
+  photos?: string[];
   distance?: number;
   isVerified: boolean;
   isNearby: boolean;
   interests?: string[];
   bio?: string;
+  image: any;
+  modalImage: any;
+  writeup: string;
 }
 
 export interface Profile extends User {

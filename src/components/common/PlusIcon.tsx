@@ -5,13 +5,11 @@ import { Colors } from '../../constants/theme';
 interface PlusIconProps {
   size?: number;
   color?: string;
-  backgroundColor?: string;
 }
 
-const PlusIcon: React.FC<PlusIconProps> = ({ 
-  size = 28, 
-  color = Colors.text.primary,
-  backgroundColor = Colors.white 
+const PlusIcon: React.FC<PlusIconProps> = ({
+  size = 28,
+  color = Colors.text.primary
 }) => {
   const iconSize = size;
   const lineWidth = Math.max(2, size * 0.15);

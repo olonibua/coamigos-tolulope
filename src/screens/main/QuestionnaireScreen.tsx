@@ -6,19 +6,15 @@ import {
   TouchableOpacity,
   StatusBar,
   SafeAreaView,
-  Dimensions,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import {
   Colors,
   Spacing,
   Typography,
-  BorderRadius,
   Shadows,
 } from '../../constants/theme';
 import { RootStackParamList } from '../../types';
-
-const { width, height } = Dimensions.get('window');
 
 const questionsData = [
   {

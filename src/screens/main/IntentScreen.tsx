@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   StatusBar,
   Dimensions,
   ScrollView,
-  Image,
   Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,101 +19,28 @@ import {
   Shadows,
 } from '../../constants/theme';
 import { RootStackParamList } from '../../types';
-import PlusIcon from '../../components/common/PlusIcon';
 import Logo from '../../components/common/Logo';
+import { users } from '../../data/users';
+import { useUserInteractions } from '../../hooks/useUserInteractions';
+import { useCardActions } from '../../hooks/useCardActions';
+import NormalCardContent from '../../components/cards/NormalCardContent';
+import ExpandedCardContent from '../../components/cards/ExpandedCardContent';
 
 const { width, height } = Dimensions.get('window');
 
-const users = [
-  {
-    id: '1',
-    name: 'Julia Michael',
-    age: 27,
-    gender: 'Female',
-    distance: 0.2,
-    isVerified: true,
-    isNearby: true,
-    image: require('../../assets/images/immm.png'),
-    modalImage: require('../../assets/images/immm2.png'),
-    writeup:
-      "Julia mentioned she'd like to play tennis after work, and you're also in kingston.",
-  },
-  {
-    id: '2',
-    name: 'Philip szul',
-    age: 27,
-    gender: 'Male',
-    distance: 0.8,
-    isVerified: true,
-    isNearby: true,
-    image: require('../../assets/images/man2.jpg'),
-    modalImage: require('../../assets/images/man.jpg'),
-    writeup:
-      'Philip loves photography and weekend hiking. You both enjoy outdoor adventures and coffee.',
-  },
-  {
-    id: '3',
-    name: 'Sarah Johnson',
-    age: 25,
-    gender: 'Female',
-    distance: 1.5,
-    isVerified: true,
-    isNearby: true,
-    image: require('../../assets/images/immm.png'),
-    modalImage: require('../../assets/images/immm2.png'),
-    writeup:
-      "Sarah is passionate about yoga and meditation. She's looking for someone to explore new restaurants with.",
-  },
-];
-
 const IntentScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [likedUsers, setLikedUsers] = useState<Set<string>>(new Set());
+  const userInteractions = useUserInteractions();
+  const { isUserSelected, isUserLiked } = userInteractions;
 
-  const handleActionPress = (userId: string) => {
-    if (selectedUserId === userId) {
-      slideDown(userId);
-    } else {
-      if (selectedUserId) {
-        slideDown(selectedUserId);
-      }
-      setTimeout(
-        () => {
-          setSelectedUserId(userId);
-          // slideUp();
-        },
-        selectedUserId ? 300 : 0,
-      );
-    }
-  };
-
-  const slideDown = (userId: string) => {
-    if (selectedUserId === userId) {
-      setSelectedUserId(null);
-    }
-  };
-
-  const handleLikePress = (userId: string) => {
-    setLikedUsers(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(userId)) {
-        newSet.delete(userId);
-      } else {
-        newSet.add(userId);
-      }
-      return newSet;
-    });
-
-    // Navigate to questionnaire after a short delay to show the checkmark
-    setTimeout(() => {
-      navigation.navigate('Questionnaire');
-    }, 300);
-  };
+  const { handleActionPress, handleLikePress } = useCardActions({
+    ...userInteractions,
+    navigation,
+  });
 
   const renderUserCard = (user: (typeof users)[0]) => {
     const cardWidth = width * 0.65;
-    const isExpanded = selectedUserId === user.id;
+    const isExpanded = isUserSelected(user.id);
 
     return (
       <Animated.View
@@ -133,73 +59,14 @@ const IntentScreen = () => {
           activeOpacity={0.95}
         >
           {!isExpanded ? (
-            // Normal card view
-            <>
-              <View style={styles.userInfoContainer}>
-                <View style={styles.badges}>
-                  {user.isNearby && (
-                    <View style={styles.nearbyBadge}>
-                      <Text style={styles.badgeText}>Nearby</Text>
-                    </View>
-                  )}
-                  {user.isVerified && (
-                    <View style={styles.verifiedBadge}>
-                      <Text style={styles.badgeText}>Verified</Text>
-                    </View>
-                  )}
-                </View>
-                <View style={styles.info}>
-                  <Text style={styles.userName}>{user.name}</Text>
-                  <Text style={styles.userDetails}>
-                    {user.age}, {user.gender}
-                  </Text>
-                  <View style={styles.moreInfo}>
-                    {user.distance && (
-                      <Text style={styles.distance}>
-                        📍 {user.distance} mile
-                      </Text>
-                    )}
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.imageContainer}>
-                <Image source={user.image} style={styles.userImage} />
-              </View>
-
-              <View style={styles.floatingButton}>
-                <Text style={styles.floatingButtonText}>↑</Text>
-              </View>
-            </>
+            <NormalCardContent user={user} styles={styles} />
           ) : (
-            // Expanded card view
-            <>
-              <View style={styles.expandedImageContainer}>
-                <Image source={user.modalImage} style={styles.expandedImage} />
-                <TouchableOpacity
-                  style={[
-                    styles.imageAddButton,
-                    likedUsers.has(user.id) && styles.imageAddButtonLiked,
-                  ]}
-                  onPress={() => handleLikePress(user.id)}
-                >
-                  {likedUsers.has(user.id) ? (
-                    <Text style={styles.checkmarkText}>✓</Text>
-                  ) : (
-                    <PlusIcon size={24} color={Colors.text.primary} />
-                  )}
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.expandedWriteupContainer}>
-                <View style={styles.writeupIndicator} />
-                <Text style={styles.writeupText}>{user.writeup}</Text>
-              </View>
-
-              <View style={styles.expandedFloatingButton}>
-                <Text style={styles.expandedFloatingButtonText}>↓</Text>
-              </View>
-            </>
+            <ExpandedCardContent
+              user={user}
+              isLiked={isUserLiked(user.id)}
+              onLike={() => handleLikePress(user.id)}
+              styles={styles}
+            />
           )}
         </TouchableOpacity>
       </Animated.View>

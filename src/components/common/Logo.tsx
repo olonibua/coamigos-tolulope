@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { Colors } from '../../constants/theme';
 
 interface LogoProps {
   size?: 'small' | 'medium' | 'large';
@@ -8,11 +7,7 @@ interface LogoProps {
   textColor?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({
-  size = 'medium',
-  showText = false,
-  textColor = Colors.text.primary,
-}) => {
+const Logo: React.FC<LogoProps> = () => {
   return (
     <View style={styles.logo}>
       <Image
