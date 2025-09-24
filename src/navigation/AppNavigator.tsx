@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 import { Colors } from '../constants/theme';
 import { RootStackParamList, TabParamList } from '../types';
@@ -23,6 +23,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 const MainTabNavigator = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Intent"
       screenOptions={{
         headerShown: false,
         tabBarStyle: styles.tabBar,
@@ -38,7 +39,7 @@ const MainTabNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <Text
               style={{
-                fontSize: 22,
+                fontSize: 20,
                 color: focused ? Colors.white : Colors.gray.medium,
               }}
             >
@@ -64,7 +65,7 @@ const MainTabNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <Text
               style={{
-                fontSize: 22,
+                fontSize: 20,
                 color: focused ? Colors.white : Colors.gray.medium,
               }}
             >
@@ -90,7 +91,7 @@ const MainTabNavigator = () => {
           tabBarIcon: ({ focused }) => (
             <Text
               style={{
-                fontSize: 22,
+                fontSize: 20,
                 color: focused ? Colors.white : Colors.gray.medium,
               }}
             >
@@ -126,7 +127,10 @@ const AppNavigator = () => {
         {user ? (
           <>
             <Stack.Screen name="Main" component={MainTabNavigator} />
-            <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
+            <Stack.Screen
+              name="Questionnaire"
+              component={QuestionnaireScreen}
+            />
           </>
         ) : (
           <>

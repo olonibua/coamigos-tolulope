@@ -8,10 +8,10 @@ interface LogoProps {
   textColor?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ 
+const Logo: React.FC<LogoProps> = ({
   size = 'medium',
   showText = false,
-  textColor = Colors.text.primary 
+  textColor = Colors.text.primary,
 }) => {
   return (
     <View style={styles.logo}>

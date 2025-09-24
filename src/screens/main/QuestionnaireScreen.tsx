@@ -24,7 +24,8 @@ const questionsData = [
   {
     id: 1,
     category: 'Social Energy',
-    question: 'Do you recharge more by spending time alone, or being around people?',
+    question:
+      'Do you recharge more by spending time alone, or being around people?',
     options: ['Extrovert', 'Ambivert', 'Introvert'],
   },
   {
@@ -36,7 +37,8 @@ const questionsData = [
   {
     id: 3,
     category: 'Decision Making',
-    question: 'When making important decisions, do you rely more on logic or intuition?',
+    question:
+      'When making important decisions, do you rely more on logic or intuition?',
     options: ['Logic', 'Both', 'Intuition'],
   },
   {
@@ -48,7 +50,8 @@ const questionsData = [
   {
     id: 5,
     category: 'Relationships',
-    question: 'In relationships, do you value deep connections or broad social circles?',
+    question:
+      'In relationships, do you value deep connections or broad social circles?',
     options: ['Deep', 'Both', 'Broad'],
   },
   {
@@ -99,7 +102,11 @@ const QuestionnaireScreen = () => {
     }
   };
 
-  const SwitchComponent = ({ options, selectedIndex, onSelect }: {
+  const SwitchComponent = ({
+    options,
+    selectedIndex,
+    onSelect,
+  }: {
     options: string[];
     selectedIndex: number | null;
     onSelect: (index: number) => void;
@@ -110,7 +117,9 @@ const QuestionnaireScreen = () => {
           style={styles.labelButton}
           onPress={() => onSelect(0)}
         >
-          <Text style={[styles.switchLabel, styles.topLabel]}>{options[0]}</Text>
+          <Text style={[styles.switchLabel, styles.topLabel]}>
+            {options[0]}
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.switchTrack}>
@@ -127,7 +136,9 @@ const QuestionnaireScreen = () => {
             style={styles.middleLabelContainer}
             onPress={() => onSelect(1)}
           >
-            <Text style={[styles.switchLabel, styles.middleLabel]}>{options[1]}</Text>
+            <Text style={[styles.switchLabel, styles.middleLabel]}>
+              {options[1]}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -135,7 +146,9 @@ const QuestionnaireScreen = () => {
           style={styles.labelButton}
           onPress={() => onSelect(2)}
         >
-          <Text style={[styles.switchLabel, styles.bottomLabel]}>{options[2]}</Text>
+          <Text style={[styles.switchLabel, styles.bottomLabel]}>
+            {options[2]}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -169,7 +182,7 @@ const QuestionnaireScreen = () => {
           <TouchableOpacity
             style={[
               styles.nextButton,
-              selectedAnswer === null && styles.nextButtonDisabled
+              selectedAnswer === null && styles.nextButtonDisabled,
             ]}
             onPress={handleNext}
             disabled={selectedAnswer === null}

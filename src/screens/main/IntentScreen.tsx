@@ -36,7 +36,8 @@ const users = [
     isNearby: true,
     image: require('../../assets/images/immm.png'),
     modalImage: require('../../assets/images/immm2.png'),
-    writeup: "Julia mentioned she'd like to play tennis after work, and you're also in kingston.",
+    writeup:
+      "Julia mentioned she'd like to play tennis after work, and you're also in kingston.",
   },
   {
     id: '2',
@@ -48,7 +49,8 @@ const users = [
     isNearby: true,
     image: require('../../assets/images/man2.jpg'),
     modalImage: require('../../assets/images/man.jpg'),
-    writeup: "Philip loves photography and weekend hiking. You both enjoy outdoor adventures and coffee.",
+    writeup:
+      'Philip loves photography and weekend hiking. You both enjoy outdoor adventures and coffee.',
   },
   {
     id: '3',
@@ -60,7 +62,8 @@ const users = [
     isNearby: true,
     image: require('../../assets/images/immm.png'),
     modalImage: require('../../assets/images/immm2.png'),
-    writeup: "Sarah is passionate about yoga and meditation. She's looking for someone to explore new restaurants with.",
+    writeup:
+      "Sarah is passionate about yoga and meditation. She's looking for someone to explore new restaurants with.",
   },
 ];
 
@@ -76,14 +79,15 @@ const IntentScreen = () => {
       if (selectedUserId) {
         slideDown(selectedUserId);
       }
-      setTimeout(() => {
-        setSelectedUserId(userId);
-        // slideUp();
-      }, selectedUserId ? 300 : 0);
+      setTimeout(
+        () => {
+          setSelectedUserId(userId);
+          // slideUp();
+        },
+        selectedUserId ? 300 : 0,
+      );
     }
   };
-
-  
 
   const slideDown = (userId: string) => {
     if (selectedUserId === userId) {
@@ -101,7 +105,7 @@ const IntentScreen = () => {
       }
       return newSet;
     });
-    
+
     // Navigate to questionnaire after a short delay to show the checkmark
     setTimeout(() => {
       navigation.navigate('Questionnaire');
@@ -120,7 +124,7 @@ const IntentScreen = () => {
           {
             width: cardWidth,
           },
-          isExpanded && styles.expandedCardContainer
+          isExpanded && styles.expandedCardContainer,
         ]}
       >
         <TouchableOpacity
@@ -151,7 +155,9 @@ const IntentScreen = () => {
                   </Text>
                   <View style={styles.moreInfo}>
                     {user.distance && (
-                      <Text style={styles.distance}>📍 {user.distance} mile</Text>
+                      <Text style={styles.distance}>
+                        📍 {user.distance} mile
+                      </Text>
                     )}
                   </View>
                 </View>
@@ -170,19 +176,19 @@ const IntentScreen = () => {
             <>
               <View style={styles.expandedImageContainer}>
                 <Image source={user.modalImage} style={styles.expandedImage} />
-                 <TouchableOpacity
-                   style={[
-                     styles.imageAddButton,
-                     likedUsers.has(user.id) && styles.imageAddButtonLiked
-                   ]}
-                   onPress={() => handleLikePress(user.id)}
-                 >
-                   {likedUsers.has(user.id) ? (
-                     <Text style={styles.checkmarkText}>✓</Text>
-                   ) : (
-                     <PlusIcon size={24} color={Colors.text.primary} />
-                   )}
-                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.imageAddButton,
+                    likedUsers.has(user.id) && styles.imageAddButtonLiked,
+                  ]}
+                  onPress={() => handleLikePress(user.id)}
+                >
+                  {likedUsers.has(user.id) ? (
+                    <Text style={styles.checkmarkText}>✓</Text>
+                  ) : (
+                    <PlusIcon size={24} color={Colors.text.primary} />
+                  )}
+                </TouchableOpacity>
               </View>
 
               <View style={styles.expandedWriteupContainer}>
@@ -190,9 +196,9 @@ const IntentScreen = () => {
                 <Text style={styles.writeupText}>{user.writeup}</Text>
               </View>
 
-               <View style={styles.expandedFloatingButton}>
-                 <Text style={styles.expandedFloatingButtonText}>↓</Text>
-               </View>
+              <View style={styles.expandedFloatingButton}>
+                <Text style={styles.expandedFloatingButtonText}>↓</Text>
+              </View>
             </>
           )}
         </TouchableOpacity>
@@ -220,10 +226,9 @@ const IntentScreen = () => {
           snapToInterval={width * 0.65 + Spacing.md}
           snapToAlignment="start"
         >
-          {users.map((user) => renderUserCard(user))}
+          {users.map(user => renderUserCard(user))}
         </ScrollView>
       </View>
-
     </SafeAreaView>
   );
 };
@@ -371,7 +376,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: Typography.fontSize.lg,
     fontWeight: Typography.fontWeight.bold,
-    
   },
   messageSection: {
     margin: Spacing.md,
